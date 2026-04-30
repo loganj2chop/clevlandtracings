@@ -23,12 +23,16 @@ class ManageTracingsNoPred:
 
     def run(self):
         outer = []
+        print(self.file_path)
 
         files = os.listdir(self.file_path)
+        print(files)
         files_txt = [f for f in files if f.endswith(".txt")]
 
         for file in files_txt:
+            print(file)
             file_study_id = file.split(".")[0]
+            print(f"File study_id: {file_study_id}")
 
             # match metadata row
             meta = self.df[self.df["study_id"].astype(str) == file_study_id]
@@ -93,6 +97,7 @@ def main():
     args = parser.parse_args()
 
     df = pd.read_csv(args.metadata_csv)
+    print(df.head())
 
     required_cols = {"study_id", "ebc"}
     missing = required_cols - set(df.columns)
