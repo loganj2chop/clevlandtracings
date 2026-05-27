@@ -21,7 +21,7 @@ class ManageTracingsNoPred:
         self.file_path = file_path
         self.df = df
 
-    def run(self):
+    def run(self, output_csv):
         outer = []
         print(self.file_path)
 
@@ -72,8 +72,9 @@ class ManageTracingsNoPred:
             raise RuntimeError("No matching tracing files were processed.")
 
         finaldf = pd.concat(outer, ignore_index=True)
-        finaldf.to_csv("vudstracings.csv", index=False)
-        print("Saved vudstracings.csv")
+        finaldf.to_csv(output_csv, index=False)
+    
+        print(f"Saved {output_csv}")
 
 
 # ======================================================
@@ -93,6 +94,11 @@ def main():
         required=True,
         help="CSV file containing study metadata (must include study_id, ebc)",
     )
+    parser.add_argument(
+        "--output_csv",
+        required=True,
+        help="CSV file containing study output",
+    )
 
     args = parser.parse_args()
 
@@ -105,7 +111,7 @@ def main():
         raise ValueError(f"Missing required columns in metadata CSV: {missing}")
 
     runner = ManageTracingsNoPred(args.txt_dir, df)
-    runner.run()
+    runner.run(output_csv=args.output_csv)
 
 
 if __name__ == "__main__":
