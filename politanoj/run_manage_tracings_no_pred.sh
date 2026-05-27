@@ -12,7 +12,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 CODE_PATH="${SCRIPT_DIR}"
-CONFIG_FILE="${CODE_PATH}/manage_tracings_no_pred.conf"
+CONFIG_FILE="/home/politaj/clevlandtracings/politanoj/manage_tracings_no_pred.conf"
 
 if [ ! -f "${CONFIG_FILE}" ]; then
   echo "Config file not found: ${CONFIG_FILE}"
