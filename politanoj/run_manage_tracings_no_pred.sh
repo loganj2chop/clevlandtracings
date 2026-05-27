@@ -9,10 +9,9 @@
 # If you need a specific partition, uncomment and adjust the next line.
 #SBATCH -p xtreme
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-CODE_PATH="${SCRIPT_DIR}"
 CONFIG_FILE="/home/politaj/clevlandtracings/politanoj/manage_tracings_no_pred.conf"
+CODE_PATH="$(dirname "${CONFIG_FILE}")"
+REPO_ROOT="$(dirname "${CODE_PATH}")"
 
 if [ ! -f "${CONFIG_FILE}" ]; then
   echo "Config file not found: ${CONFIG_FILE}"
@@ -20,6 +19,10 @@ if [ ! -f "${CONFIG_FILE}" ]; then
 fi
 
 . "${CONFIG_FILE}"
+
+if [ -n "${ENV_ACTIVATE:-}" ]; then
+  ENV_ACTIVATE="${ENV_ACTIVATE/#\\~/$HOME}"
+fi
 
 for var in RAW_TXT_DIR RENAMED_TXT_DIR METADATA_CSV OUTPUT_CSV; do
   if [ -z "${!var:-}" ]; then
