@@ -54,9 +54,21 @@ mkdir -p "${CODE_PATH}/logs"
 mkdir -p "${RENAMED_TXT_DIR}"
 mkdir -p "$(dirname "${OUTPUT_CSV}")"
 
+echo "RAW_TXT_DIR=${RAW_TXT_DIR}"
+echo "RENAMED_TXT_DIR=${RENAMED_TXT_DIR}"
+
+echo "Listing source directory contents:"
+ls -la "${RAW_TXT_DIR}" || true
+
+echo "Listing renamed directory contents before copy:"
+ls -la "${RENAMED_TXT_DIR}" || true
+
 python "${CODE_PATH}/rename_tracing_files.py" \
   --input_dir "${RAW_TXT_DIR}" \
   --output_dir "${RENAMED_TXT_DIR}"
+
+echo "Listing renamed directory contents after copy:"
+ls -la "${RENAMED_TXT_DIR}" || true
 
 python "${REPO_ROOT}/manage_tracings_no_pred.py" \
   --txt_dir "${RENAMED_TXT_DIR}" \
